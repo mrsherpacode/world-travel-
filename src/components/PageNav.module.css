@@ -1,0 +1,13 @@
+.nav {
+  background-color: green;
+}
+
+.nav ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+/*  this is how we apply global class to some specific classes */
+.nav :global(.active) {
+  background-color: orange;
+}
