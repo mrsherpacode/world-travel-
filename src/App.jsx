@@ -5,8 +5,33 @@ import Pricing from "./pages/Pricing";
 import PageNotFound from "./pages/PageNotFound";
 import Login from "./pages/Login";
 import AppLayout from "./pages/AppLayout";
-
+import { useEffect, useState } from "react";
+import CityList from "./components/CityList";
+const BASE_URL = "http://localhost:9000";
 function App() {
+  const [cities, setCities] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  // This hook loads cities data from  the fake API that i created
+  useEffect(
+    function () {
+      async function fetchCities() {
+        setIsLoading(true);
+
+        try {
+          const res = await fetch(`${BASE_URL}/cities`);
+          const data = await res.json();
+          setCities(data);
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+      fetchCities();
+    },
+
+    []
+  );
   return (
     <BrowserRouter>
       <Routes>
@@ -15,13 +40,18 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
 
         <Route path="/app" element={<AppLayout />}>
-          {/* This is called index route which is render as default rout inside app route */}
-          <Route index element={<p>cities</p>} />
-          {/* Here, i'm creating nexted routes or child routes of app  */}
-          <Route path="cities" element={<p>The list of cities</p>} />
+          <Route
+            index
+            element={<CityList cities={cities} isLoading={isLoading} />}
+          />
+          <Route
+            path="cities"
+            element={<CityList cities={cities} isLoading={isLoading} />}
+          />
           <Route path="countries" element={<p>Countries</p>} />
           <Route path="form" element={<p>Form</p>} />
         </Route>
+
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
