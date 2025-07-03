@@ -8,6 +8,7 @@ import AppLayout from "./pages/AppLayout";
 import { useEffect, useState } from "react";
 import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
+import City from "./components/City";
 // API URL
 const BASE_URL = "http://localhost:9000";
 function App() {
@@ -51,6 +52,10 @@ function App() {
             path="cities"
             element={<CityList cities={cities} isLoading={isLoading} />}
           />
+          {/* 
+          This route creates a dynamic URL pattern `/app/cities/:id` where `:id` is a parameter that can be any value (like a city ID), and when matched, it renders the `City` component which can access that ID to display details for a specific city.
+          */}
+          <Route path="cities/:id" element={<City />} />
           <Route
             path="countries"
             element={<CountryList cities={cities} isLoading={isLoading} />}
