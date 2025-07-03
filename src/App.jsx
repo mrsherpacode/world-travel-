@@ -7,8 +7,11 @@ import Login from "./pages/Login";
 import AppLayout from "./pages/AppLayout";
 import { useEffect, useState } from "react";
 import CityList from "./components/CityList";
+import CountryList from "./components/CountryList";
+// API URL
 const BASE_URL = "http://localhost:9000";
 function App() {
+  // we are creating cities state here cuz we need this state in other places too.
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   // This hook loads cities data from  the fake API that i created
@@ -48,7 +51,10 @@ function App() {
             path="cities"
             element={<CityList cities={cities} isLoading={isLoading} />}
           />
-          <Route path="countries" element={<p>Countries</p>} />
+          <Route
+            path="countries"
+            element={<CountryList cities={cities} isLoading={isLoading} />}
+          />
           <Route path="form" element={<p>Form</p>} />
         </Route>
 
