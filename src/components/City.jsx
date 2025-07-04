@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import styles from "./City.module.css";
 
 const formatDate = (date) =>
@@ -22,8 +22,21 @@ function City() {
   };
 
   const { cityName, emoji, date, notes } = currentCity;
-  return <h2>The city {id} </h2>;
+  // useSearchParams hook gets the URL query parameters (lat, lng)
+  const [searchParam, setSearchParam] = useSearchParams();
+  const lat = searchParam.get("lat");
+  const lng = searchParam.get("lng");
+  // setSearchParam will update the searchParam state like useState does
+  // Example: setSearchParam({ lat: 20, lng: 30 }); // Only call this in event handlers
 
+  return (
+    <>
+      <h2>The city : {id} </h2>
+      <h3>
+        Position: {lat} , {lng}
+      </h3>
+    </>
+  );
   // return (
   //   <div className={styles.city}>
   //     <div className={styles.row}>
