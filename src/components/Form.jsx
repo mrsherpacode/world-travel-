@@ -3,6 +3,9 @@
 import { useState } from "react";
 
 import styles from "./Form.module.css";
+// this button is reuseable button component
+import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -13,6 +16,8 @@ export function convertToEmoji(countryCode) {
 }
 
 function Form() {
+  // // Programmatic navigation allows us to go to other pages without us having to click on navigation link.
+  const navigate = useNavigate();
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
   const [date, setDate] = useState(new Date());
@@ -34,6 +39,7 @@ function Form() {
         <label htmlFor="date">When did you go to {cityName}?</label>
         <input
           id="date"
+          type="date"
           onChange={(e) => setDate(e.target.value)}
           value={date}
         />
@@ -49,8 +55,17 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <button>Add</button>
-        <button>&larr; Back</button>
+        <Button type="primary">Add</Button>
+        <Button
+          type="back"
+          onClick={(e) => {
+            e.preventDefault();
+            // Here, -1 means go back to previous page.
+            navigate(-1);
+          }}
+        >
+          &larr; Back
+        </Button>
       </div>
     </form>
   );

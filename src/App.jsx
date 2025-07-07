@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Product from "./pages/Product";
 import Pricing from "./pages/Pricing";
@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 import CityList from "./components/CityList";
 import CountryList from "./components/CountryList";
 import City from "./components/City";
-// API URL
+import Form from "./components/Form";
+// API URL //
 const BASE_URL = "http://localhost:9000";
 function App() {
   // we are creating cities state here cuz we need this state in other places too.
@@ -20,7 +21,6 @@ function App() {
     function () {
       async function fetchCities() {
         setIsLoading(true);
-
         try {
           const res = await fetch(`${BASE_URL}/cities`);
           const data = await res.json();
@@ -44,10 +44,8 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
 
         <Route path="/app" element={<AppLayout />}>
-          <Route
-            index
-            element={<CityList cities={cities} isLoading={isLoading} />}
-          />
+          {/* Navigate component  performs an automatic redirect  */}
+          <Route index element={<Navigate replace to="cities" />} />
           <Route
             path="cities"
             element={<CityList cities={cities} isLoading={isLoading} />}
@@ -60,7 +58,7 @@ function App() {
             path="countries"
             element={<CountryList cities={cities} isLoading={isLoading} />}
           />
-          <Route path="form" element={<p>Form</p>} />
+          <Route path="form" element={<Form />} />
         </Route>
 
         <Route path="/login" element={<Login />} />
