@@ -1,9 +1,12 @@
+import { useCities } from "./contexts/CitiesContext";
 import CountryItem from "./CountryItem";
 import styles from "./CountryList.module.css";
 import Message from "./Message";
 import Spinner from "./Spinner";
 
-function CountryList({ cities, isLoading }) {
+function CountryList() {
+  // Here, i'm consuming the values from citiesContext provider
+  const { cities, isLoading } = useCities();
   // This crates a unique list of countries from cities data, removing duplicates while preserving the country name and emoji for display purposes.
   const countries = cities.reduce((arr, city) => {
     if (!arr.map((el) => el.country).includes(city.country)) {
