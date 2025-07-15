@@ -29,7 +29,7 @@ function CitiesProvider({ children }) {
 
     []
   );
-
+  //  this function is called in the City component on its initial render.
   async function getCity(id) {
     setIsLoading(true);
     try {

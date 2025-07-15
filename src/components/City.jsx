@@ -2,6 +2,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import styles from "./City.module.css";
 import { useCities } from "./contexts/CitiesContext";
 import { useEffect } from "react";
+import BackButton from "./BackButton";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -15,6 +16,7 @@ function City() {
   // here, i'm using useParams hook which  gets the id parameter from the URL.
   // React Router hook that returns an object containing all URL parameters
   const { id } = useParams();
+  //  useCities is from citiesContext file and getCity is a function that fetch city based on its id.
   const { getCity, currentCity } = useCities();
   useEffect(
     function () {
@@ -57,7 +59,10 @@ function City() {
         </a>
       </div>
 
-      <div>{/* <ButtonBack /> */}</div>
+      <div>
+        {/* this is a re-useable button component  from BackButton file */}
+        <BackButton />
+      </div>
     </div>
   );
 }
