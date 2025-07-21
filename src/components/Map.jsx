@@ -10,8 +10,6 @@ import {
 } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { useCities } from "./contexts/CitiesContext";
-import { useGeolocation } from "../hooks/UseGeolocation";
-import Button from "./Button";
 //  map component
 function Map() {
   // This will get lat and lang from url and we use useSearchParams hook  for that
@@ -22,12 +20,6 @@ function Map() {
   /////////////////////////////////////////////////////////////////////////////////////////////////////
   // useCities function is from CityContext file
   const { cities } = useCities();
-  // useGeolocation is a custom hook from UseGeolocation page
-  const {
-    isLoading: isLoadingPosition,
-    position: geolocationPosition,
-    getPosition,
-  } = useGeolocation();
   //  mapPosition is for position of the map that usually take the lat and lng
   const [mapPosition, setMapPosition] = useState([40, 0]);
   ///////////////////////////////////////////////////////
@@ -37,29 +29,12 @@ function Map() {
     },
     [mapLat, mapLng]
   );
-
-  //////////////////////////////////////
-  // this useEffect synch the mapPositon with the geolocationPosition and move the map to the your current location .
-  useEffect(
-    function () {
-      if (geolocationPosition)
-        setMapPosition([geolocationPosition.lat, geolocationPosition.lng]);
-    },
-    [geolocationPosition]
-  );
   return (
     <div className={styles.mapContainer}>
       {/* This container is from open-source React components for Leaflet maps (https://react-leaflet.js.org/) 
        
        to use this go to site and look for instructions .
       */}
-
-      {/*This is a custom Button component from Button file and this button only appears if there is not already the geolocationPosition */}
-      {!geolocationPosition && (
-        <Button type="primary" onClick={getPosition}>
-          {isLoadingPosition ? "Loading..." : "Use ur location"}
-        </Button>
-      )}
       <MapContainer
         center={mapPosition}
         zoom={13}
@@ -104,7 +79,9 @@ function DetectClick() {
   const navigate = useNavigate();
   useMapEvents({
     // when click on map it renders form and gets it's lat and lng from url
-    click: (e) => navigate(`form?lat=${e.latlng.lat}?lng${e.latlng.lng}`),
+    click: (e) => {
+      navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
+    },
   });
 }
 
