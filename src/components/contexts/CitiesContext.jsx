@@ -43,8 +43,32 @@ function CitiesProvider({ children }) {
     }
   }
 
+  // This function uploads newCity object to the fake API that i created before  //
+  async function createCity(newCity) {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${BASE_URL}/cities`, {
+        method: "POST",
+        body: JSON.stringify(newCity),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      const data = await res.json();
+      // console.log(data);
+      // This synches UI with the remote data, the one that comes from the API
+      setCities((cities) => [...cities, data]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <CitiesContext.Provider value={{ cities, isLoading, getCity, currentCity }}>
+    <CitiesContext.Provider
+      value={{ cities, isLoading, getCity, currentCity, createCity }}
+    >
       {children}
     </CitiesContext.Provider>
   );

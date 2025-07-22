@@ -1,6 +1,10 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
 import { useEffect, useState } from "react";
+// This is a reuseable Datepicker component from react.(https://www.npmjs.com/package/react-datepicker) ///
+import DatePicker from "react-datepicker";
+//css from react Datepicker
+import "react-datepicker/dist/react-datepicker.css";
 
 import styles from "./Form.module.css";
 // this button is reuseable button component
@@ -9,6 +13,7 @@ import BackButton from "./BackButton";
 import { UseUrlPosition } from "../hooks/UseUrlPosition";
 import Spinner from "./Spinner";
 import Message from "./Message";
+import { useCities } from "./contexts/CitiesContext";
 
 export function convertToEmoji(countryCode) {
   console.log("convertToEmoji called with:", countryCode);
@@ -41,10 +46,13 @@ export function convertToEmoji(countryCode) {
 function Form() {
   // UseUrlPosition() is from the UseUrlPosition file.
   const [lat, lng] = UseUrlPosition();
+  //createCity is  a function from citiesContext file that uploads newCity object to fake API  .
+
+  const { createCity } = useCities();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [date, setDate] = useState(new Date());
   const [notes, setNotes] = useState("");
   const [emoji, setEmoji] = useState("");
   const [geocodingError, setGeocodingError] = useState("");
@@ -53,7 +61,6 @@ function Form() {
   useEffect(
     function () {
       if (!lat || !lng) return;
-
       async function fetchCityData() {
         try {
           setIsLoadingGeocoding(true);
@@ -87,9 +94,25 @@ function Form() {
 
   if (isLoadingGeocoding) return <Spinner />;
   if (geocodingError) return <Message message={geocodingError} />;
+  if (!lat && !lng) return <Message message="Start by clicking on the map" />;
+
+  // This function  submit or uploads  newCity object  to the fake API that i created for this project, when clicked on Add button //
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!cityName || !date) return;
+    const newCity = {
+      cityName,
+      country,
+      emoji,
+      date,
+      notes,
+      position: { lat, lng },
+    };
+    createCity(newCity);
+  }
 
   return (
-    <form className={styles.form}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
@@ -102,11 +125,18 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
+        {/* <input
           id="date"
           type="date"
           onChange={(e) => setDate(e.target.value)}
           value={date}
+        /> */}
+        {/*  This is a reuseable component from react-datepicker */}
+        <DatePicker
+          onChange={(date) => setDate(date)}
+          selected={date}
+          format="dd/MM/yyyy"
+          id="date"
         />
       </div>
 
