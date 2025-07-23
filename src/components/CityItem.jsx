@@ -13,7 +13,13 @@ function CityItem({ city }) {
   // console.log(city);
   // destructuring the city object
   const { cityName, emoji, date, id, position } = city;
-  const { currentCity } = useCities();
+  const { currentCity, deleteCity } = useCities();
+  //This function deletes the city list from cities
+  function handleDelete(e) {
+    e.preventDefault();
+    // deleteCity function is from citiesContext file that deletes the citylist from cities.
+    deleteCity(id);
+  }
   return (
     <li>
       {/*when click on one of the link it will take to another page or component that matches the corrosponding link 
@@ -27,7 +33,9 @@ function CityItem({ city }) {
         <span className={styles.emoji}>{emoji}</span>
         <h3 className={styles.name}> {cityName} </h3>
         <time className={styles.date}>({formatDate(date)})</time>
-        <button className={styles.deleteBtn}>&times;</button>
+        <button className={styles.deleteBtn} onClick={handleDelete}>
+          &times;
+        </button>
       </Link>
     </li>
   );

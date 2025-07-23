@@ -57,7 +57,25 @@ function CitiesProvider({ children }) {
       const data = await res.json();
       // console.log(data);
       // This synches UI with the remote data, the one that comes from the API
+      // it adds newCity data to current cities array object
       setCities((cities) => [...cities, data]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  /////////////////////////////////////////
+  // This function delete the city list from the  cities
+  async function deleteCity(id) {
+    setIsLoading(true);
+    try {
+      await fetch(`${BASE_URL}/cities/${id}`, {
+        method: "DELETE",
+      });
+      // it creates a new city without the city that has the matching id and cities list will re-render without the deleted city.
+      setCities((cities) => cities.filter((city) => city.id !== id));
     } catch (err) {
       console.error(err);
     } finally {
@@ -67,7 +85,14 @@ function CitiesProvider({ children }) {
 
   return (
     <CitiesContext.Provider
-      value={{ cities, isLoading, getCity, currentCity, createCity }}
+      value={{
+        cities,
+        isLoading,
+        getCity,
+        currentCity,
+        createCity,
+        deleteCity,
+      }}
     >
       {children}
     </CitiesContext.Provider>

@@ -14,6 +14,7 @@ import { UseUrlPosition } from "../hooks/UseUrlPosition";
 import Spinner from "./Spinner";
 import Message from "./Message";
 import { useCities } from "./contexts/CitiesContext";
+import { useNavigate } from "react-router-dom";
 
 export function convertToEmoji(countryCode) {
   console.log("convertToEmoji called with:", countryCode);
@@ -44,11 +45,13 @@ export function convertToEmoji(countryCode) {
 }
 
 function Form() {
+  // programatic navigation.
+  const navigate = useNavigate();
   // UseUrlPosition() is from the UseUrlPosition file.
   const [lat, lng] = UseUrlPosition();
   //createCity is  a function from citiesContext file that uploads newCity object to fake API  .
 
-  const { createCity } = useCities();
+  const { createCity, isLoading } = useCities();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
@@ -97,7 +100,7 @@ function Form() {
   if (!lat && !lng) return <Message message="Start by clicking on the map" />;
 
   // This function  submit or uploads  newCity object  to the fake API that i created for this project, when clicked on Add button //
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!cityName || !date) return;
     const newCity = {
@@ -108,11 +111,16 @@ function Form() {
       notes,
       position: { lat, lng },
     };
-    createCity(newCity);
+    await createCity(newCity);
+    // programmatic navigation, when click on the back button it redirects the users  back to the cities list and this happens after the form is uploaded to the API.
+    navigate("/app/cities");
   }
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form
+      className={`${styles.form} ${isLoading ? styles.isLoading : ""}`}
+      onSubmit={handleSubmit}
+    >
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
