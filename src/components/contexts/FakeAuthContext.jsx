@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 // This context is for the user Authentication.
-const AuthContext = createContext;
+const AuthContext = createContext();
 // FAKE_USER object for texting
 const FAKE_USER = {
   name: "Jack",
@@ -43,7 +43,7 @@ function AuthProvider({ children }) {
     dispatch({ type: "logout" });
   }
   return (
-    <AuthContext.Provider value={(user, isAuthenticated, login, logout)}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
