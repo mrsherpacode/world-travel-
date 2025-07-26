@@ -11,6 +11,7 @@ import City from "./components/City";
 import Form from "./components/Form";
 import { CitiesProvider } from "./components/contexts/CitiesContext";
 import { AuthProvider } from "./components/contexts/FakeAuthContext";
+import { ProtectedRoute } from "./pages/ProtectedRoute";
 
 function App() {
   // This contextProvider is from FakeAuthcontext file
@@ -27,7 +28,15 @@ function App() {
             <Route path="/product" element={<Product />} />
             <Route path="/pricing" element={<Pricing />} />
 
-            <Route path="/app" element={<AppLayout />}>
+            <Route
+              path="/app"
+              element={
+                // ProtectedRoute component is from protedRoute page that protects the access to these pages if the user is not login or isAuthenticated.
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
               {/* Navigate component  performs an automatic redirect  */}
               <Route index element={<Navigate replace to="cities" />} />
               <Route path="cities" element={<CityList />} />
