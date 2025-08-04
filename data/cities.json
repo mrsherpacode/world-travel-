@@ -35,6 +35,78 @@
         "lat": "39.94212035820185",
         "lng": "-0.06402969360351564"
       }
+    },
+    {
+      "id": "831a",
+      "cityName": "Castello de la Plana",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-08-04T19:52:19.471Z",
+      "notes": "",
+      "position": {
+        "lat": "40.05941720578923",
+        "lng": "-0.0015449523925781252"
+      }
+    },
+    {
+      "id": "c686",
+      "cityName": "Castello de la Plana",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-08-04T19:54:46.778Z",
+      "notes": "",
+      "position": {
+        "lat": "40.023539457294255",
+        "lng": "0.005836486816406251"
+      }
+    },
+    {
+      "id": "a4ba",
+      "cityName": "Castello de la Plana",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-08-04T19:56:14.543Z",
+      "notes": "",
+      "position": {
+        "lat": "39.97541000119306",
+        "lng": "-0.08085250854492189"
+      }
+    },
+    {
+      "id": "62d4",
+      "cityName": "Castello de la Plana",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-08-04T19:56:24.360Z",
+      "notes": "",
+      "position": {
+        "lat": "39.99934746834736",
+        "lng": "-0.07965087890625001"
+      }
+    },
+    {
+      "id": "5700",
+      "cityName": "Castello de la Plana",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-08-04T19:56:51.863Z",
+      "notes": "",
+      "position": {
+        "lat": "40.04746005398654",
+        "lng": "0.0032615661621093754"
+      }
+    },
+    {
+      "id": "03ac",
+      "cityName": "Borriol",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2025-08-04T19:58:03.274Z",
+      "notes": "",
+      "position": {
+        "lat": "40.03444934152963",
+        "lng": "-0.07638931274414064"
+      }
     }
   ]
 }
